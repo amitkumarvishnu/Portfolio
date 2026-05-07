@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { motion } from 'framer-motion'
 import { Link } from 'react-scroll'
 import { FiArrowDown, FiGithub, FiLinkedin } from 'react-icons/fi'
@@ -26,6 +26,12 @@ const itemVariants = {
 export default function Hero() {
   const [roleIndex, setRoleIndex] = useState(0)
   const [typedText, setTypedText] = useState('')
+
+  const cvHref = useMemo(() => {
+    if (personalInfo.cvUrl.startsWith('http')) return personalInfo.cvUrl
+    const cleanPath = personalInfo.cvUrl.replace(/^\//, '')
+    return `${import.meta.env.BASE_URL}${cleanPath}`
+  }, [])
 
   useEffect(() => {
     const currentRole = personalInfo.role[roleIndex]
@@ -75,7 +81,7 @@ export default function Hero() {
           <Link to="projects" smooth={true} offset={-70} duration={500} className="btn btn-primary">
             View Projects
           </Link>
-          <a href={personalInfo.cvUrl} className="btn btn-outline" download>
+          <a href={cvHref} className="btn btn-outline" download>
             Download CV
           </a>
         </motion.div>
