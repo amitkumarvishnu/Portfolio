@@ -71,7 +71,12 @@ export default function About() {
           viewport={{ once: true, amount: 0.35 }}
           transition={{ duration: 0.3 }}
         >
-          <img src="/about-profile.jpg" alt="Amit Kumar Vishnu" className="about-image" loading="lazy" />
+          <img
+            src={`${import.meta.env.BASE_URL}about-profile.jpg`}
+            alt="Amit Kumar Vishnu"
+            className="about-image"
+            loading="lazy"
+          />
 
           <div className="about-meta">
             <p>
