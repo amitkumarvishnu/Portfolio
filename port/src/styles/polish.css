@@ -1,0 +1,80 @@
+#smooth-wrapper {
+  overflow-x: hidden;
+}
+
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: var(--accent);
+  transform-origin: 0 50%;
+  z-index: 500;
+  will-change: transform;
+}
+
+.page-loader {
+  position: fixed;
+  inset: 0;
+  background: var(--bg);
+  z-index: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.page-loader span {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: clamp(2rem, 10vw, 4.5rem);
+  letter-spacing: 0.06em;
+  color: var(--accent);
+}
+
+.custom-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 1px solid var(--accent);
+  background: rgba(0, 255, 136, 0.16);
+  pointer-events: none;
+  z-index: 550;
+  will-change: transform;
+  transition: width 0.2s ease, height 0.2s ease, margin 0.2s ease, mix-blend-mode 0.2s ease;
+}
+
+.custom-cursor.cursor-expanded {
+  width: 36px;
+  height: 36px;
+  margin-left: -12px;
+  margin-top: -12px;
+  mix-blend-mode: difference;
+  background: rgba(255, 255, 255, 0.22);
+}
+
+@media (hover: none) {
+  .custom-cursor {
+    display: none;
+  }
+
+  .btn:hover,
+  .skill-card:hover,
+  .project-card:hover .project-media.placeholder,
+  .project-card:hover .project-media,
+  .project-card:hover .project-overlay,
+  .footer-icons a:hover {
+    transform: none;
+    opacity: 1;
+    color: inherit;
+    border-color: inherit;
+  }
+
+  .project-overlay {
+    opacity: 1;
+    background: linear-gradient(to top, rgba(10, 10, 10, 0.65), rgba(10, 10, 10, 0.15));
+  }
+}
