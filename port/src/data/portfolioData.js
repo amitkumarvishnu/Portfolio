@@ -83,7 +83,7 @@ export const projects = [
       "Included printable PDF reporting for regulator/government audits and a CMS homepage managed by Super Admin.",
       "Defined migration strategy from MongoDB to MariaDB (Sequelize ORM) for stronger relational reporting and scalability.",
     ],
-    stack: ["React.js", "Node.js", "Express.js", "MariaDB", "Sequelize", "RBAC", "MFA"],
+    stack: ["Next.js", "Node.js", "Express.js", "postgresql", "Sequelize", "RBAC", "MFA"],
     category: "Full Stack",
     color: "#7dd3fc",
     mainSiteUrl: "https://main.aerospacesms.com/",
