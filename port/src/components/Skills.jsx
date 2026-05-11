@@ -77,6 +77,11 @@ export default function Skills() {
   return (
     <section id="skills" className="skills">
       <div className="skills-inner">
+        <div className="about-section-label" aria-hidden="true">
+          <span className="label-line" />
+          <span className="label-text">SKILLS</span>
+          <span className="label-line" />
+        </div>
         <h2>Tech Stack</h2>
 
         <div className="skills-tabs" role="tablist" aria-label="Skill categories">
