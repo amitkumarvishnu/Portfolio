@@ -18,10 +18,60 @@ html {
 }
 
 body {
-  background: var(--bg);
+  background-color: #090909;
+  background-image: radial-gradient(circle, rgba(255,255,255,0.08) 1px, transparent 1px);
+  background-size: 28px 28px;
+  background-attachment: fixed;
   color: var(--text);
   font-family: 'DM Sans', sans-serif;
   overflow-x: hidden;
+}
+
+.bg-blob {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.bg-blob::before {
+  content: '';
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  background: var(--accent);
+  opacity: 0.055;
+  filter: blur(100px);
+  top: -150px;
+  right: -100px;
+  animation: blobFloat 10s ease-in-out infinite alternate;
+}
+
+.bg-blob::after {
+  content: '';
+  position: absolute;
+  width: 350px;
+  height: 350px;
+  border-radius: 50%;
+  background: var(--accent);
+  opacity: 0.03;
+  filter: blur(80px);
+  bottom: -80px;
+  left: 60px;
+  animation: blobFloat 13s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes blobFloat {
+  from { transform: translate(0, 0) scale(1); }
+  to   { transform: translate(20px, 30px) scale(1.07); }
+}
+
+section,
+footer {
+  position: relative;
+  z-index: 1;
 }
 
 h1,
