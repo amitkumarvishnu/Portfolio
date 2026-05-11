@@ -28,12 +28,8 @@ export default function App() {
   }, [])
 
   useEffect(() => {
-    const supportsHover = !window.matchMedia('(hover: none)').matches
     const cursor = cursorRef.current
-    if (!cursor || !supportsHover) {
-      if (cursor) cursor.style.display = 'none'
-      return undefined
-    }
+    if (!cursor) return undefined
 
     const hoverables = document.querySelectorAll('a, button')
     hoverables.forEach((el) => el.classList.add('hoverable'))
@@ -72,6 +68,7 @@ export default function App() {
 
   return (
     <>
+      <div className="bg-blob" />
       <motion.div className="scroll-progress" style={{ scaleX: scrollYProgress }} />
 
       <AnimatePresence>
