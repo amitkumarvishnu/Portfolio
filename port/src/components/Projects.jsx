@@ -3,7 +3,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { FiExternalLink, FiGithub } from 'react-icons/fi'
 import { projects } from '../data/portfolioData'
 
-const filters = ['All', 'Full Stack', 'Frontend', 'UI/UX']
+const filters = ['All', 'Full Stack', 'Frontend', 'Backend']
 
 const detailsVariants = {
   collapsed: {
