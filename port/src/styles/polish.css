@@ -42,7 +42,7 @@
   border: 1px solid var(--accent);
   background: rgba(0, 255, 136, 0.16);
   pointer-events: none;
-  z-index: 550;
+  z-index: 1000;
   will-change: transform;
   transition: width 0.2s ease, height 0.2s ease, margin 0.2s ease, mix-blend-mode 0.2s ease;
 }
