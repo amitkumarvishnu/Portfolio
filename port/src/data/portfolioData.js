@@ -1,6 +1,6 @@
 export const personalInfo = {
   name: "Amit Kumar Vishnu",
-  role: ["Full Stack Developer", "React.js Developer", "Next.js", "JavaScript", "TypeScript", "Node.js Engineer", "Express.js", "MongoDB", "MySQL"],
+  role: ["Full Stack Developer", "React.js", "Next.js", "JavaScript", "TypeScript", "Node.js", "Express.js", "MongoDB", "MySQL"],
   email: "amitkumarvishnu0702@gmail.com",
   phone: "+91-8340632694",
   location: "Dehradun, India",
