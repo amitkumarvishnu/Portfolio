@@ -10,13 +10,13 @@ const detailsVariants = {
     height: 0,
     opacity: 0,
     overflow: 'hidden',
-    transition: { duration: 0.22, ease: 'easeOut' },
+    transition: { duration: 0.25, ease: [0.4, 0, 0.2, 1] },
   },
   expanded: {
     height: 'auto',
     opacity: 1,
     overflow: 'hidden',
-    transition: { duration: 0.22, ease: 'easeOut' },
+    transition: { duration: 0.25, ease: [0.4, 0, 0.2, 1] },
   },
 }
 
@@ -35,6 +35,11 @@ export default function Projects() {
 
   return (
     <section id="projects" className="projects">
+      <div className="about-section-label" aria-hidden="true">
+        <span className="label-line" />
+        <span className="label-text">PROJECTS</span>
+        <span className="label-line" />
+      </div>
       <div className="projects-head">
         <h2>Selected Work</h2>
         <span className="projects-count">{projects.length}</span>
@@ -55,7 +60,7 @@ export default function Projects() {
 
       <motion.div layout className="projects-grid">
         <AnimatePresence mode="popLayout">
-          {filteredProjects.map((project) => {
+          {filteredProjects.map((project, index) => {
             const showDetails = !!openDetails[project.id]
             const mainUrl = project.mainSiteUrl || project.liveUrl
             const promoUrl = project.promoSiteUrl || project.githubUrl
@@ -67,20 +72,33 @@ export default function Projects() {
                 layout
                 key={project.id}
                 className="project-card"
-                initial={{ opacity: 0, y: 18 }}
+                initial={{ opacity: 0, y: 24 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -12 }}
-                transition={{ duration: 0.22, ease: 'easeOut' }}
+                exit={{ opacity: 0, scale: 0.96 }}
+                transition={{ duration: 0.28, ease: [0.4, 0, 0.2, 1], delay: index * 0.04 }}
+                style={{ '--project-color': project.color }}
               >
+                {/* Glow orb on hover */}
+                <div className="card-glow" />
+
                 <div
                   className="project-banner"
                   style={{
-                    background: `linear-gradient(140deg, ${project.color}33 0%, transparent 70%)`,
+                    background: `linear-gradient(140deg, ${project.color}22 0%, transparent 65%)`,
                   }}
                 >
-                  <h3>{project.title}</h3>
-                  <p className="project-subtitle">{project.subtitle}</p>
-                  <span className="project-duration">{project.duration}</span>
+                  {/* Index number */}
+                  <span className="project-index">0{index + 1}</span>
+
+                  <div className="project-banner-content">
+                    <h3>{project.title}</h3>
+                    <p className="project-subtitle">{project.subtitle}</p>
+                  </div>
+
+                  <div className="project-banner-footer">
+                    <span className="project-category">{project.category}</span>
+                    <span className="project-duration">{project.duration}</span>
+                  </div>
                 </div>
 
                 <div className="project-body">
@@ -90,10 +108,11 @@ export default function Projects() {
                     {project.stack.map((tag) => (
                       <span
                         key={tag}
+                        className="project-tag"
                         style={{
-                          background: `${project.color}26`,
-                          color: project.color,
-                          borderColor: `${project.color}66`,
+                          '--tag-bg': `${project.color}18`,
+                          '--tag-color': project.color,
+                          '--tag-border': `${project.color}55`,
                         }}
                       >
                         {tag}
@@ -103,11 +122,12 @@ export default function Projects() {
 
                   <button
                     type="button"
-                    className="details-toggle"
+                    className={`details-toggle ${showDetails ? 'is-open' : ''}`}
                     onClick={() => toggleDetails(project.id)}
                     aria-expanded={showDetails}
                   >
-                    Details {showDetails ? '▲' : '▼'}
+                    <span>Details</span>
+                    <span className="toggle-icon">{showDetails ? '▲' : '▼'}</span>
                   </button>
 
                   <AnimatePresence initial={false}>
@@ -136,12 +156,13 @@ export default function Projects() {
                         target="_blank"
                         rel="noreferrer"
                         aria-label="Main Site"
-                        data-tooltip="Main Site"
+                        data-tooltip="Live Site"
+                        className="action-btn"
                       >
                         <FiExternalLink />
                       </a>
                     ) : (
-                      <button type="button" disabled aria-label="Coming Soon" data-tooltip="Coming Soon">
+                      <button type="button" disabled aria-label="Coming Soon" data-tooltip="Coming Soon" className="action-btn">
                         <FiExternalLink />
                       </button>
                     )}
@@ -153,11 +174,12 @@ export default function Projects() {
                         rel="noreferrer"
                         aria-label="Promo Site"
                         data-tooltip="Promo Site"
+                        className="action-btn"
                       >
                         <FiGithub />
                       </a>
                     ) : (
-                      <button type="button" disabled aria-label="Coming Soon" data-tooltip="Coming Soon">
+                      <button type="button" disabled aria-label="Coming Soon" data-tooltip="Coming Soon" className="action-btn">
                         <FiGithub />
                       </button>
                     )}
