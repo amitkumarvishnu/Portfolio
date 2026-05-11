@@ -6,7 +6,7 @@ export const personalInfo = {
   location: "Dehradun, India",
   linkedin: "https://www.linkedin.com/in/amitkumarvishnu", // replace with actual
   github: "https://github.com/amitkumarvishnu", // replace with actual
-  bio: "Full Stack Developer at smartData Enterprises with hands-on experience building scalable real-time platforms, multi-vendor e-commerce systems, and enterprise admin portals. I turn complex business requirements into clean, production-grade code — 50+ APIs shipped, 99.9% uptime maintained.",
+  bio: "Full Stack Developer by title. Problem solver by nature. I build the kind of software that holds up — real-time platforms, enterprise portals, e-commerce systems handling real traffic, real users, real stakes. 50+ APIs shipped. 99.9% uptime. Zero shortcuts. I believe great software isn't just functional — it's thoughtful. Every component, every endpoint, every decision is a chance to do it right.",
   shortBio: "I build fast, reliable, full-stack web apps with React & Node.js.",
   available: true,
   cvUrl: "/Amit_Kumar_Vishnu.pdf", // place your CV PDF in public/
