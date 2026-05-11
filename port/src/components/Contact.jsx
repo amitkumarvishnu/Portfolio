@@ -71,6 +71,11 @@ export default function Contact() {
 
   return (
     <section id="contact" className="contact">
+      <div className="about-section-label" aria-hidden="true">
+        <span className="label-line" />
+        <span className="label-text">CONTACT</span>
+        <span className="label-line" />
+      </div>
       <div className="contact-grid">
         <motion.div
           className="contact-left"
