@@ -1,12 +1,10 @@
 import { useRef, useState } from 'react'
-import emailjs from '@emailjs/browser'
 import { AnimatePresence, motion } from 'framer-motion'
 import { FiGithub, FiLinkedin, FiMail, FiMapPin, FiPhone } from 'react-icons/fi'
 import { personalInfo } from '../data/portfolioData'
 
-const EMAILJS_SERVICE_ID = 'YOUR_SERVICE_ID'
-const EMAILJS_TEMPLATE_ID = 'YOUR_TEMPLATE_ID'
-const EMAILJS_PUBLIC_KEY = 'YOUR_PUBLIC_KEY'
+const WEB3FORMS_ENDPOINT = 'https://api.web3forms.com/submit'
+const WEB3FORMS_ACCESS_KEY = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY
 
 const initialErrors = {
   from_name: '',
@@ -54,16 +52,33 @@ export default function Contact() {
     setIsSubmitting(true)
 
     try {
-      await emailjs.sendForm(
-        EMAILJS_SERVICE_ID,
-        EMAILJS_TEMPLATE_ID,
-        formRef.current,
-        EMAILJS_PUBLIC_KEY,
-      )
-      setStatus({ type: 'success', message: 'Thanks Amit will get back to you soon! 🚀' })
+      if (!WEB3FORMS_ACCESS_KEY) {
+        throw new Error('Web3Forms is not configured. Please set VITE_WEB3FORMS_ACCESS_KEY.')
+      }
+
+      const payload = new FormData(formRef.current)
+      payload.append('access_key', WEB3FORMS_ACCESS_KEY)
+      payload.append('name', formData.from_name)
+      payload.append('email', formData.from_email)
+
+      const response = await fetch(WEB3FORMS_ENDPOINT, {
+        method: 'POST',
+        body: payload,
+      })
+
+      const result = await response.json()
+
+      if (!response.ok || !result.success) {
+        throw new Error(result.message || 'Failed to send message. Please try again.')
+      }
+
+      setStatus({ type: 'success', message: 'Message sent successfully!' })
       formRef.current.reset()
-    } catch {
-      setStatus({ type: 'error', message: 'Failed to send message. Please try again.' })
+    } catch (error) {
+      setStatus({
+        type: 'error',
+        message: error?.message || 'Failed to send message. Please try again.',
+      })
     } finally {
       setIsSubmitting(false)
     }
@@ -122,6 +137,8 @@ export default function Contact() {
           viewport={{ once: true, amount: 0.3 }}
         >
           <form ref={formRef} onSubmit={handleSubmit} noValidate className="contact-form-modern">
+            <input type="checkbox" name="botcheck" className="hidden" style={{ display: 'none' }} />
+
             <div className="field">
               <input id="from_name" name="from_name" type="text" placeholder=" " required />
               <label htmlFor="from_name">Name</label>
