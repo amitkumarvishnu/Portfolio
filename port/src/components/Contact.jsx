@@ -1,10 +1,12 @@
 import { useRef, useState } from 'react'
+import HCaptcha from '@hcaptcha/react-hcaptcha'
 import { AnimatePresence, motion } from 'framer-motion'
 import { FiGithub, FiLinkedin, FiMail, FiMapPin, FiPhone } from 'react-icons/fi'
 import { personalInfo } from '../data/portfolioData'
 
 const WEB3FORMS_ENDPOINT = 'https://api.web3forms.com/submit'
 const WEB3FORMS_ACCESS_KEY = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY
+const HCAPTCHA_SITEKEY = '50b2fe65-b00b-4b9e-ad62-3ba471098be2'
 
 const initialErrors = {
   from_name: '',
@@ -14,9 +16,11 @@ const initialErrors = {
 
 export default function Contact() {
   const formRef = useRef(null)
+  const hcaptchaRef = useRef(null)
   const [errors, setErrors] = useState(initialErrors)
   const [status, setStatus] = useState({ type: '', message: '' })
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [captchaToken, setCaptchaToken] = useState('')
 
   const validate = (formData) => {
     const nextErrors = { ...initialErrors }
@@ -49,6 +53,11 @@ export default function Contact() {
     const hasErrors = Object.values(nextErrors).some(Boolean)
     if (hasErrors) return
 
+    if (!captchaToken) {
+      setStatus({ type: 'error', message: 'Please complete captcha verification.' })
+      return
+    }
+
     setIsSubmitting(true)
 
     try {
@@ -60,6 +69,7 @@ export default function Contact() {
       payload.append('access_key', WEB3FORMS_ACCESS_KEY)
       payload.append('name', formData.from_name)
       payload.append('email', formData.from_email)
+      payload.set('h-captcha-response', captchaToken)
 
       const response = await fetch(WEB3FORMS_ENDPOINT, {
         method: 'POST',
@@ -74,11 +84,15 @@ export default function Contact() {
 
       setStatus({ type: 'success', message: 'Message sent successfully!' })
       formRef.current.reset()
+      setCaptchaToken('')
+      hcaptchaRef.current?.resetCaptcha()
     } catch (error) {
       setStatus({
         type: 'error',
         message: error?.message || 'Failed to send message. Please try again.',
       })
+      hcaptchaRef.current?.resetCaptcha()
+      setCaptchaToken('')
     } finally {
       setIsSubmitting(false)
     }
@@ -156,6 +170,14 @@ export default function Contact() {
               <label htmlFor="message">Message</label>
               {errors.message && <p className="field-error">{errors.message}</p>}
             </div>
+
+            <HCaptcha
+              ref={hcaptchaRef}
+              sitekey={HCAPTCHA_SITEKEY}
+              reCaptchaCompat={false}
+              onVerify={setCaptchaToken}
+              onExpire={() => setCaptchaToken('')}
+            />
 
             <button type="submit" className="submit-btn" disabled={isSubmitting}>
               {isSubmitting ? (
