@@ -21,7 +21,7 @@ export const stats = [
 export const experience = [
   {
     company: "smartData Enterprises (India) Ltd.",
-    role: "Software Analyst — Full Stack Developer",
+    role: "Associate Software — Full Stack Developer",
     duration: "Sep 2024 – Present",
     location: "Dehradun, India",
     points: [
